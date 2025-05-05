@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 
 export default function Sidebar({ onCategoryChange }) {
     const [categories, setCategories] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState(null);
 
     const handleCheckboxChange = (category) => {
-        onCategoryChange(prev =>
-            prev === category ? null : category
-        );
+        const newCategory = selectedCategory === category ? null : category;
+        setSelectedCategory(newCategory);
+        onCategoryChange(newCategory);
     };
 
     useEffect(() => {
@@ -34,14 +35,14 @@ export default function Sidebar({ onCategoryChange }) {
     }, []);
 
     return (
-        <div style={{ marginRight: "20px" }}>
+        <div style={{ marginRight: "100px" }}>
             <h3>Categories</h3>
             {categories.map((categoria, index) => (
                 <div key={index}>
                     <label>
                         <input
                             type="checkbox"
-                            checked={false}
+                            checked={selectedCategory === categoria.nom}
                             onChange={() => handleCheckboxChange(categoria.nom)}
                         />
                         {categoria.nom}

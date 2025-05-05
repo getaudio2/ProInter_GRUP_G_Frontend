@@ -18,7 +18,7 @@ export default function ProductoMini(props) {
             <h1>{nom}</h1>
             <p>{descripcio}</p>
             <h3>Preu: {preu}€</h3>
-            <button onClick={goToDetail}>Ver Detalles</button>
+            <button className="detail-btn" onClick={goToDetail}>Ver Detalles</button>
         </div>
     );
 }

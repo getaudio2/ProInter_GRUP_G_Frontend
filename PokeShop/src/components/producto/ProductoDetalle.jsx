@@ -13,7 +13,7 @@ export default function ProductoDetalle() {
             .then(res => res.json())
             .then(data => {
                 setProduct(data);
-                setSelected(data.rating || 0); // set current rating
+                setSelected(data.rating || 0);
             })
             .catch(err => console.error(err));
     }, [id]);
