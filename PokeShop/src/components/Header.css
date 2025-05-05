@@ -1,0 +1,38 @@
+.header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  body {
+    margin: 0;
+  }
+  
+  .header {
+    margin: 0;
+  }
+  
+  .logo img {
+    height: 40px;
+  }
+  
+  .navegador {
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  .navegador a {
+    text-decoration: none;
+    color: #1a202c;
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+  
+  .navegador a:hover {
+    color: #2b6cb0;
+  }
+  
