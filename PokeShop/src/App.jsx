@@ -1,10 +1,12 @@
-import './App.css'
-
+import Registro from './Register';
+import React from 'react';
+import Carrito from './Carrito';
 function App() {
 
   return (
     <>
-      <p>hello world</p>
+      <Registro />
+      <Carrito/>
     </>
   )
 }
