@@ -10,10 +10,12 @@ export default function Catalogo({productos}) {
                 productos.map((producto, index) => (
                     <ProductoMini
                         key={index}
+                        id={producto.id}
                         nom={producto.nom}
                         descripcio={producto.descripcio}
                         nomCategoria={producto.nom_categoria}
                         preu={producto.preu}
+                        img={producto.img}
                     />
                 ))
             }
