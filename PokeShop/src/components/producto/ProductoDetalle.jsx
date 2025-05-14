@@ -5,8 +5,14 @@ import { useParams } from 'react-router-dom';
 export default function ProductoDetalle() {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
+    const [carrito, setCarrito] = useState(null);
     const [hovered, setHovered] = useState(0);
     const [selected, setSelected] = useState(0);
+    const user_id = "1";
+
+    useEffect(() =>{
+        
+    },[]);
 
     useEffect(() => {
         fetch(`http://localhost:8000/api/productos/${id}/`)
@@ -31,6 +37,29 @@ export default function ProductoDetalle() {
         } catch (err) {
             console.error("Error updating rating:", err);
         }
+    };
+
+    const addToCart = async () => {
+        if (!carrito) {
+            try {
+                const response = await fetch(`http://localhost:8000/api/carritos/create/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ user_id }),
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log(data);
+                }
+            } catch (err) {
+                console.error("Error creating cart:", err);
+            }
+        }
+
+        
     };
 
     if (!product) return <p>Cargando...</p>;
@@ -58,6 +87,7 @@ export default function ProductoDetalle() {
                             </span>
                         ))}
                     </div>
+                    <button className="add-to-cart-btn" onClick={addToCart}>Añadir al carrito</button>
                 </div>
             </div>
             <p className="product-description">{product.descripcio}</p>
