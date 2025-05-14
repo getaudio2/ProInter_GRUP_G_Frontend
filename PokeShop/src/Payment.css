@@ -1,0 +1,77 @@
+.payment-container {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    background-color: #fafafa;
+    font-family: Arial, sans-serif;
+  }
+  
+  .payment-form label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
+  .payment-form input[type="text"],
+  .payment-form input[type="checkbox"] {
+    margin-top: 5px;
+    padding: 8px;
+    width: 100%;
+    max-width: 250px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .payment-form input[type="checkbox"] {
+    width: auto;
+    margin-right: 8px;
+  }
+  
+  .payment-form .buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .payment-form button {
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  .payment-form button[type="button"] {
+    background-color: #f44336;
+  }
+  
+  .payment-form button:hover {
+    opacity: 0.9;
+  }
+  
+  /* Separador */
+  hr {
+    margin: 40px 0;
+  }
+
+
+  .payment-form .expiry-date {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Espacio entre los campos */
+  }
+  
+  .payment-form .expiry-date input {
+    width: 40px; /* Tamaño pequeño para los campos */
+    padding: 5px;
+    text-align: center;
+  }
+  
+  .payment-form .expiry-date span {
+    font-size: 18px; /* El tamaño del '/' */
+  }
+  

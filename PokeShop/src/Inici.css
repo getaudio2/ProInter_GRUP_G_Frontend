@@ -1,0 +1,50 @@
+.info-tienda {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 1rem;
+  background-color: #f4f4f9;
+  text-align: center;
+}
+
+.info-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-left: 30px;
+}
+
+.info-texto {
+  width: 45%;
+  text-align: left;
+}
+
+.info-boton {
+  margin-top: 1rem;
+  width: 300px;
+}
+
+.btn-descubrir {
+  background-color: #ffcc00;
+  color: white;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.btn-descubrir:hover {
+  background-color: #ff9900;
+}
+
+.info-imagen {
+  width: 45%;
+}
+
+.info-imagen img {
+  width: 100%;
+  height: auto;
+}
