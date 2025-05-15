@@ -1,18 +1,15 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css'
 import Login from './components/login/Login.jsx'
-import Registro from "./components/registro/Register.jsx";
-
 import CatalogoPage from './components/catalogo/CatalogoPage.jsx'
 import ProductoDetalle from "./components/producto/ProductoDetalle.jsx";
 import Header from "./components/inici/Header.jsx";
-
 
 import Profile from './Profile';
 import Inici  from './Inici'; 
 import Payment from './Payment';
 import Confirmation from './PaymentConfirm';
-
+import Carrito from "./Carrito.jsx";
 
 function App() {
   return (
@@ -29,6 +26,7 @@ function App() {
         <Route path="/" element={<Inici />} />
         <Route path="/perfil" element={<Profile />} />
         <Route path="/payment" element={<Payment />} />
+        <Route path="/carrito" element={<Carrito />} />
         <Route path="/payment/confirmation" element={<Confirmation />} />
 
       </Routes>
