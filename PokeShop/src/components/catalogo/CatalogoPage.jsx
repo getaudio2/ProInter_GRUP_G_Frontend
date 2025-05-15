@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Sidebar from "./Sidebar.jsx";
 import Catalogo from "./Catalogo.jsx";
+import "./CatalogoPage.css";
 import Header from "../inici/Header.jsx";
 
 export default function CatalogoPage() {
