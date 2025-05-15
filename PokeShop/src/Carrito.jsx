@@ -26,7 +26,7 @@ const Carrito = ({ usuarioid }) => {
   };
 
   useEffect(() => {
-    let id = usuarioid;
+    let id = propUserId || localStorage.getItem("user_id");
     if (!id) {
       const match = document.cookie.match(/(^|;\s*)id\s*=\s*([^;]+)/);
       if (match) id = match[2];
@@ -38,7 +38,7 @@ const Carrito = ({ usuarioid }) => {
       console.error("No se encontró el ID de usuario.");
       setLoading(false);
     }
-  }, [usuarioid]);
+  }, [propUserId]);
 
   const handleDeleteItem = async (itemId) => {
     try {
