@@ -1,0 +1,63 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #ffffff;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logo img {
+  width: 40px;
+  height: 40px;
+  margin-right: 0.5rem;
+}
+
+.nombre-tienda {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #000000;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+.navegador {
+  display: flex;
+  gap: 2rem;
+}
+
+.navegador a {
+  text-decoration: none;
+  color: #000000;
+  font-size: 1.1rem;
+}
+
+.navegador a:hover {
+  color: #ff0000;
+}
+
+header div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+header button {
+  background-color: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+header button:hover {
+  color: #ff0000;
+}
