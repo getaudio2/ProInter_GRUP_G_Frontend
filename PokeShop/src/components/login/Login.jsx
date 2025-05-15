@@ -17,10 +17,16 @@ function Login() {
                 body: JSON.stringify({ email, password }),
             });
 
-            const data = await response.json();
             if (response.ok) {
-                console.log("Login successful:", data);
-                navigate("/catalogo");
+                const data = await response.json();
+                console.log("Login successful:",data);
+                localStorage.setItem("user_id",data.id)
+
+                if (data.rol == "Usuario") {
+                    navigate("/catalogo");
+                } else {
+                    navigate("/admin");
+                }
             } else {
                 console.error("Login failed:", data);
                 alert(data.error || "Login failed");
