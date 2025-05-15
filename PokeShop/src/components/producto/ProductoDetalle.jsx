@@ -1,16 +1,16 @@
-import "./ProductoDetalle.css"
+import "./ProductoDetalle.css";
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 export default function ProductoDetalle() {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
-    const [carrito, setCarrito] = useState(null);
+    const [carrito, setCarrito] = useState(() => localStorage.getItem("cart_id"));
     const [hovered, setHovered] = useState(0);
     const [selected, setSelected] = useState(0);
     const user_id = localStorage.getItem("user_id");
 
-    // We retrieve the product data, getting the id from the url param
+    // Get product detail
     useEffect(() => {
         fetch(`http://localhost:8000/api/productos/${id}/`)
             .then(res => res.json())
@@ -21,16 +21,12 @@ export default function ProductoDetalle() {
             .catch(err => console.error(err));
     }, [id]);
 
-    // We update the product's rating when the user clicks the star icon
-    // and patch the number between 1-5
     const handleRate = async (rating) => {
         setSelected(rating);
         try {
             await fetch(`http://localhost:8000/api/productos/update/${id}/`, {
                 method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ rating }),
             });
         } catch (err) {
@@ -39,23 +35,76 @@ export default function ProductoDetalle() {
     };
 
     const addToCart = async () => {
-        if (!carrito) {
+        // Check if user is logged in
+        if (!user_id) {
+            alert("Please log in to add items to cart");
+            return;
+        }
+
+        let cartId = carrito;
+
+        // We create the cart if it doesn't exist
+        if (!cartId) {
             try {
-                const response = await fetch(`http://localhost:8000/api/carritos/create/`, {
+                const response = await fetch("http://localhost:8000/api/carritos/create/", {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ user_id }),
                 });
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log(data);
-                }
+
+                if (!response.ok) throw new Error("Failed to create cart");
+
+                const data = await response.json();
+                cartId = data.id;
+                setCarrito(cartId);
+                localStorage.setItem("cart_id", cartId);
             } catch (err) {
-                console.error("Error creating cart:", err);
+                return console.error("Error creating cart:", err);
             }
+        }
+
+        try {
+            // We check if the product is already in the cart
+            const itemsResponse = await fetch(`http://localhost:8000/api/item-carrito/`);
+            const allItems = await itemsResponse.json();
+            
+            const existingItem = allItems.find(item => 
+                item.cart_id == cartId && item.product_id == product.id
+            );
+
+            if (existingItem) {
+                // If item exists, we add +1 to the quantity
+                const updateResponse = await fetch(
+                    `http://localhost:8000/api/item-carrito/update/${existingItem.id}/`, 
+                    {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            quantity: existingItem.quantity + 1
+                        }),
+                    }
+                );
+
+                if (!updateResponse.ok) throw new Error("Failed to update item quantity");
+                console.log("Item quantity updated:", existingItem.id);
+            } else {
+                // If item doesn't exist, we create it
+                const createResponse = await fetch("http://localhost:8000/api/item-carrito/create/", {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        cart_id: cartId,
+                        product_id: product.id,
+                        quantity: 1
+                    }),
+                });
+
+                if (!createResponse.ok) throw new Error("Failed to add product to cart");
+                const itemData = await createResponse.json();
+                console.log("New item added to cart:", itemData);
+            }
+        } catch (err) {
+            console.error("Error updating cart:", err);
         }
     };
 
