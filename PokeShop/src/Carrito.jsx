@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from 'react';
 
 const Carrito = ({ usuarioid }) => {
-  const [order, setOrder] = useState(null);
+  const [carrito, setCarrito] = useState(null);
+  const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchCart = async (id) => {
+  const fetchCart = async (userId) => {
     try {
-      const response = await fetch(`http://localhost:8000/api/orders/${id}/`);
-      const data = await response.json();
-      if (response.ok && data.length > 0) {
-        const lastOrder = data[data.length - 1]; // Última orden (carrito actual)
-        setOrder(lastOrder);
-      } else {
-        setOrder(null);
-      }
+      const resCarrito = await fetch(`http://localhost:8000/api/carritos/usuario/${userId}/`);
+      if (!resCarrito.ok) throw new Error('No se pudo obtener el carrito');
+
+      const dataCarrito = await resCarrito.json();
+      setCarrito(dataCarrito);
+
+      const resItems = await fetch(`http://localhost:8000/api/item-carrito/`);
+      const allItems = await resItems.json();
+
+      const itemsUsuario = allItems.filter(item => item.cart_id === dataCarrito.id);
+      setItems(itemsUsuario);
     } catch (err) {
       console.error('Error al cargar el carrito:', err);
     } finally {
@@ -25,9 +29,7 @@ const Carrito = ({ usuarioid }) => {
     let id = usuarioid;
     if (!id) {
       const match = document.cookie.match(/(^|;\s*)id\s*=\s*([^;]+)/);
-      if (match) {
-        id = match[2];
-      }
+      if (match) id = match[2];
     }
 
     if (id) {
@@ -44,41 +46,43 @@ const Carrito = ({ usuarioid }) => {
         method: 'DELETE',
       });
       if (response.ok) {
-        setOrder(prev => ({
-          ...prev,
-          item_orders: prev.item_orders.filter(item => item.id !== itemId),
-        }));
+        setItems(prev => prev.filter(item => item.id !== itemId));
       }
     } catch (err) {
       console.error('Error al eliminar producto del carrito:', err);
     }
   };
 
-  const handleQuantityChange = async (itemOrderId, newQuantity) => {
+  const handleQuantityChange = async (itemId, newQuantity) => {
     if (newQuantity <= 0) return;
     try {
-      const response = await fetch(`http://localhost:8000/api/order/${order.id}/itemorder/${itemOrderId}/update/`, {
+      const response = await fetch(`http://localhost:8000/api/item-carrito/update/${itemId}/`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ quantity: newQuantity }),
       });
 
       if (response.ok) {
-        // Refresca el carrito
-        fetchCart(order.id);
+        setItems(prev =>
+          prev.map(item => item.id === itemId ? { ...item, quantity: newQuantity } : item)
+        );
       }
     } catch (err) {
       console.error('Error al actualizar cantidad:', err);
     }
   };
 
+  const calcularTotal = () => {
+    return items.reduce((acc, item) => acc + item.quantity * item.product_id.preu, 0);
+  };
+
   if (loading) return <p>Cargando carrito...</p>;
-  if (!order) return <p>No hay productos en tu carrito.</p>;
+  if (!carrito || items.length === 0) return <p>No hay productos en tu carrito.</p>;
 
   return (
     <div className="carrito">
       <h2>Tu Carrito</h2>
-      {order.item_orders.map(item => (
+      {items.map(item => (
         <div key={item.id} className="producto-carrito">
           <img src={item.product_id.img} alt={item.product_id.nom} width="100" />
           <div>
@@ -98,7 +102,7 @@ const Carrito = ({ usuarioid }) => {
           </div>
         </div>
       ))}
-      <h3>Total: €{order.preu_total}</h3>
+      <h3>Total: €{calcularTotal()}</h3>
     </div>
   );
 };

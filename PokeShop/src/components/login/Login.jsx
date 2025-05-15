@@ -20,7 +20,13 @@ function Login() {
             const data = await response.json();
             if (response.ok) {
                 console.log("Login successful:", data);
-                navigate("/catalogo");
+                document.cookie = "id=" + data.id + ";";
+                if(data.rol === "usuario") {
+                    navigate("/catalogo");
+                }else{
+                    navigate("/admin");
+                }
+
             } else {
                 console.error("Login failed:", data);
                 alert(data.error || "Login failed");
