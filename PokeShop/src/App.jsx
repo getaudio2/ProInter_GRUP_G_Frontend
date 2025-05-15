@@ -4,8 +4,6 @@ import Login from './components/login/Login.jsx'
 
 import CatalogoPage from './components/catalogo/CatalogoPage.jsx'
 import ProductoDetalle from "./components/producto/ProductoDetalle.jsx";
-//import MainPage from './components/main-page/MainPage.jsx'
-
 import Profile from './Profile';
 import Inici  from './Inici'; 
 import Payment from './Payment';
@@ -16,13 +14,9 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
-
         <Route path="/catalogo" element={<CatalogoPage />} />
         <Route path="/producto/:id" element={<ProductoDetalle />} />
-        {//<Route path="/main-page" element={<MainPage />} />
-        }
 
         <Route path="/" element={<Inici />} />
         <Route path="/perfil" element={<Profile />} />

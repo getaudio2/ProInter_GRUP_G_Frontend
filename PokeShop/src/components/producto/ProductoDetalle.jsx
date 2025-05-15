@@ -8,12 +8,9 @@ export default function ProductoDetalle() {
     const [carrito, setCarrito] = useState(null);
     const [hovered, setHovered] = useState(0);
     const [selected, setSelected] = useState(0);
-    const user_id = "1";
+    const user_id = localStorage.getItem("user_id");
 
-    useEffect(() =>{
-        
-    },[]);
-
+    // We retrieve the product data, getting the id from the url param
     useEffect(() => {
         fetch(`http://localhost:8000/api/productos/${id}/`)
             .then(res => res.json())
@@ -24,6 +21,8 @@ export default function ProductoDetalle() {
             .catch(err => console.error(err));
     }, [id]);
 
+    // We update the product's rating when the user clicks the star icon
+    // and patch the number between 1-5
     const handleRate = async (rating) => {
         setSelected(rating);
         try {
@@ -58,8 +57,6 @@ export default function ProductoDetalle() {
                 console.error("Error creating cart:", err);
             }
         }
-
-        
     };
 
     if (!product) return <p>Cargando...</p>;

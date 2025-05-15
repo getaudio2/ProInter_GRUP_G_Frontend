@@ -20,9 +20,9 @@ function Login() {
             if (response.ok) {
                 const data = await response.json();
                 console.log("Login successful:",data);
-                document.cookie = "id=" + data.id + ";";
+                localStorage.setItem("user_id", data.id);
 
-                if (data.rol == "usuario") {
+                if (data.rol === "usuario") {
                     navigate("/catalogo");
                 } else {
                     navigate("/admin");
