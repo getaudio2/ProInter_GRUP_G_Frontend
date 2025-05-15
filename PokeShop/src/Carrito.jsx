@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
-const Carrito = ({ userId }) => {
+const Carrito = ({ usuarioid }) => {
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchCart = async () => {
+  const fetchCart = async (id) => {
     try {
-      const response = await fetch(`http://localhost:8000/api/orders/${userId}/`);
+      const response = await fetch(`http://localhost:8000/api/orders/${id}/`);
       const data = await response.json();
       if (response.ok && data.length > 0) {
         const lastOrder = data[data.length - 1]; // Última orden (carrito actual)
@@ -22,12 +22,25 @@ const Carrito = ({ userId }) => {
   };
 
   useEffect(() => {
-    fetchCart(); 
-  }, [userId]);
+    let id = usuarioid;
+    if (!id) {
+      const match = document.cookie.match(/(^|;\s*)id\s*=\s*([^;]+)/);
+      if (match) {
+        id = match[2];
+      }
+    }
+
+    if (id) {
+      fetchCart(id);
+    } else {
+      console.error("No se encontró el ID de usuario.");
+      setLoading(false);
+    }
+  }, [usuarioid]);
 
   const handleDeleteItem = async (itemId) => {
     try {
-      const response = await fetch(`http://localhost:8000/api/itemorder/${itemId}/delete/`, {
+      const response = await fetch(`http://localhost:8000/api/item-carrito/delete/${itemId}`, {
         method: 'DELETE',
       });
       if (response.ok) {
@@ -51,7 +64,8 @@ const Carrito = ({ userId }) => {
       });
 
       if (response.ok) {
-        fetchCart(); 
+        // Refresca el carrito
+        fetchCart(order.id);
       }
     } catch (err) {
       console.error('Error al actualizar cantidad:', err);
@@ -66,10 +80,10 @@ const Carrito = ({ userId }) => {
       <h2>Tu Carrito</h2>
       {order.item_orders.map(item => (
         <div key={item.id} className="producto-carrito">
-          <img src={item.product_id.image} alt={item.product_id.name} width="100" />
+          <img src={item.product_id.img} alt={item.product_id.nom} width="100" />
           <div>
-            <h3>{item.product_id.name}</h3>
-            <p>{item.product_id.description}</p>
+            <h3>{item.product_id.nom}</h3>
+            <p>{item.product_id.descripcio}</p>
             <p>Precio unitario: €{item.product_id.preu}</p>
             <label>
               Cantidad:

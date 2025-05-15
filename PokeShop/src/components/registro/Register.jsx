@@ -31,12 +31,14 @@ const Registro = () => {
       });
 
       if (response.ok) {
-        const data = await response.json();
         setMensaje('Usuario creado exitosamente');
-        setTimeout(() => {
-          setMensaje('');
-        }, 4000);
-        
+        setTimeout(() => setMensaje(''), 4000);
+        setFormData({
+          username: '',
+          email: '',
+          password: '',
+          rol: 'usuario',
+        });
       } else {
         const errorData = await response.json();
         setMensaje('Error al crear usuario: ' + JSON.stringify(errorData));
@@ -78,15 +80,6 @@ const Registro = () => {
           required
           className="registro-input"
         />
-        <select
-          name="rol"
-          value={formData.rol}
-          onChange={handleChange}
-          className="registro-select"
-        >
-          <option value="usuario">Usuario</option>
-          <option value="admin">Admin</option>
-        </select>
         <button type="submit" className="registro-button">Registrarse</button>
       </form>
       {mensaje && <p className="registro-mensaje">{mensaje}</p>}
