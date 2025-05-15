@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css'
 import Login from './components/login/Login.jsx'
+import Registro from "./components/registro/Register.jsx";
 
 import CatalogoPage from './components/catalogo/CatalogoPage.jsx'
 import ProductoDetalle from "./components/producto/ProductoDetalle.jsx";
@@ -31,6 +32,7 @@ function App() {
         <Route path="/payment/confirmation" element={<Confirmation />} />
 
       </Routes>
+      <Registro/>
     </BrowserRouter>
     
   )
