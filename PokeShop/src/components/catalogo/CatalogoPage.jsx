@@ -35,9 +35,11 @@ export default function CatalogoPage() {
     }, [selectedCategory]);
 
     return (
-        <div style={{ display: "flex" }}>
+        <div style={{ display: "flex", minHeight: "100vh" }}>
             <Sidebar onCategoryChange={setSelectedCategory} />
-            <Catalogo productos={productos} />
+            <div style={{ flex: 1, padding: "20px" }}>
+                <Catalogo productos={productos} selectedCategory={selectedCategory} />
+            </div>
         </div>
     );
 }

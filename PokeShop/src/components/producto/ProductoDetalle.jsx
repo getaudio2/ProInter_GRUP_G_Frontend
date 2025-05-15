@@ -136,7 +136,10 @@ export default function ProductoDetalle() {
                     <button className="add-to-cart-btn" onClick={addToCart}>Añadir al carrito</button>
                 </div>
             </div>
-            <p className="product-description">{product.descripcio}</p>
+            <div className="product-description">
+                <h3>Descripción</h3>
+                <p>{product.descripcio}</p>
+            </div>
         </div>
     );
 }
