@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Sidebar from "./Sidebar.jsx";
 import Catalogo from "./Catalogo.jsx";
 import "./CatalogoPage.css";
+import Header from "../inici/Header.jsx";
 
 export default function CatalogoPage() {
     const [selectedCategory, setSelectedCategory] = useState(null);
@@ -11,8 +12,8 @@ export default function CatalogoPage() {
         const fetchProductos = async () => {
             try {
                 const endpoint = selectedCategory
-                    ? `http://localhost:8000/api/productos/categoria/${selectedCategory}/`
-                    : "http://localhost:8000/api/productos/";
+                    ? `http://127.0.0.1:8000/api/productos/categoria/${selectedCategory}/`
+                    : "http://127.0.0.1:8000/api/productos/";
 
                 const response = await fetch(endpoint, {
                     method: "GET",

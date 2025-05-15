@@ -1,9 +1,13 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css'
 import Login from './components/login/Login.jsx'
+import Registro from "./components/registro/Register.jsx";
 
 import CatalogoPage from './components/catalogo/CatalogoPage.jsx'
 import ProductoDetalle from "./components/producto/ProductoDetalle.jsx";
+import Header from "./components/inici/Header.jsx";
+
+
 import Profile from './Profile';
 import Inici  from './Inici'; 
 import Payment from './Payment';
@@ -13,10 +17,13 @@ import Confirmation from './PaymentConfirm';
 function App() {
   return (
     <BrowserRouter>
+      <Header />
       <Routes>
+        
         <Route path="/login" element={<Login />} />
         <Route path="/catalogo" element={<CatalogoPage />} />
         <Route path="/producto/:id" element={<ProductoDetalle />} />
+
 
         <Route path="/" element={<Inici />} />
         <Route path="/perfil" element={<Profile />} />
@@ -24,7 +31,9 @@ function App() {
         <Route path="/payment/confirmation" element={<Confirmation />} />
 
       </Routes>
+      <Registro/>
     </BrowserRouter>
+    
   )
 }
 
