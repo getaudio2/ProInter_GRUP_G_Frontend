@@ -14,11 +14,14 @@ const Header = () => {
 
       <nav className="navegador">
         <Link to="/">Inicio</Link>
-        <Link to="/tienda">Tienda</Link>
+        <Link to="/catalogo">Tienda</Link>
         <Link to="/contacto">Contacto</Link>
       </nav>
 
       <div>
+        <Link to="/carrito">
+          <button>🛒</button>
+        </Link>
         <Link to="/perfil">
           <button>👤</button>
         </Link>

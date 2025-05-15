@@ -1,4 +1,4 @@
-import Header from "./components/inici/Header";
+
 import Banner from "./components/inici/Banner";
 import "./Inici.css";
 import iniciales from "./assets/banner_iniciales.webp";
@@ -6,7 +6,6 @@ import iniciales from "./assets/banner_iniciales.webp";
 const Inici = () => {
   return (
     <div>
-      <Header />
       <Banner />
       <section className="info-tienda">
   <div className="info-content">
@@ -19,7 +18,7 @@ const Inici = () => {
       </p>
     </div>
     <div className="info-boton">
-      <a href="/tienda" className="btn-descubrir">
+      <a href="/catalogo" className="btn-descubrir">
         Descubre nuestros productos
       </a>
     </div>

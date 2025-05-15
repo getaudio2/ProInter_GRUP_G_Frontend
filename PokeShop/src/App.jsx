@@ -4,7 +4,8 @@ import Login from './components/login/Login.jsx'
 
 import CatalogoPage from './components/catalogo/CatalogoPage.jsx'
 import ProductoDetalle from "./components/producto/ProductoDetalle.jsx";
-//import MainPage from './components/main-page/MainPage.jsx'
+import Header from "./components/inici/Header.jsx";
+
 
 import Profile from './Profile';
 import Inici  from './Inici'; 
@@ -15,14 +16,14 @@ import Confirmation from './PaymentConfirm';
 function App() {
   return (
     <BrowserRouter>
+      <Header />
       <Routes>
-        <Route path="/" element={<Login />} />
+        
         <Route path="/login" element={<Login />} />
 
         <Route path="/catalogo" element={<CatalogoPage />} />
         <Route path="/producto/:id" element={<ProductoDetalle />} />
-        {//<Route path="/main-page" element={<MainPage />} />
-        }
+
 
         <Route path="/" element={<Inici />} />
         <Route path="/perfil" element={<Profile />} />
@@ -31,6 +32,7 @@ function App() {
 
       </Routes>
     </BrowserRouter>
+    
   )
 }
 

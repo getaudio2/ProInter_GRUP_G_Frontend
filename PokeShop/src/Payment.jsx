@@ -48,7 +48,7 @@ export default function Payment() {
     }
 
     // Redirigir a la página de confirmación si todo es válido
-    navigate('/payment/confirmaton');
+    navigate('/payment/confirmation');
   };
 
   const handleCancel = () => {
