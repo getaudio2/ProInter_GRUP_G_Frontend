@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Sidebar from "./Sidebar.jsx";
 import Catalogo from "./Catalogo.jsx";
+import "./CatalogoPage.css";
 import Header from "../inici/Header.jsx";
 
 export default function CatalogoPage() {
@@ -34,9 +35,11 @@ export default function CatalogoPage() {
     }, [selectedCategory]);
 
     return (
-        <div style={{ display: "flex" }}>
+        <div style={{ display: "flex", minHeight: "100vh" }}>
             <Sidebar onCategoryChange={setSelectedCategory} />
-            <Catalogo productos={productos} />
+            <div style={{ flex: 1, padding: "20px" }}>
+                <Catalogo productos={productos} selectedCategory={selectedCategory} />
+            </div>
         </div>
     );
 }

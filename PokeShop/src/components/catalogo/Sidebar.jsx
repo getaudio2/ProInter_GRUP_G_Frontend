@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import "./Sidebar.css";
 
 export default function Sidebar({ onCategoryChange }) {
     const [categories, setCategories] = useState([]);
@@ -14,12 +15,10 @@ export default function Sidebar({ onCategoryChange }) {
         const fetchCategorias = async () => {
             try {
                 const endpoint = "http://localhost:8000/api/categorias/";
-
                 const response = await fetch(endpoint, {
                     method: "GET",
                     headers: { "Content-Type": "application/json" },
                 });
-
                 const data = await response.json();
                 if (response.ok) {
                     setCategories(data);
@@ -30,12 +29,11 @@ export default function Sidebar({ onCategoryChange }) {
                 console.error("Error al request:", error);
             }
         };
-
         fetchCategorias();
     }, []);
 
     return (
-        <div style={{ marginRight: "100px" }}>
+        <div className="sidebar">
             <h3>Categories</h3>
             {categories.map((categoria, index) => (
                 <div key={index}>
