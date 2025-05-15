@@ -20,7 +20,7 @@ function Login() {
             if (response.ok) {
                 const data = await response.json();
                 console.log("Login successful:",data);
-                localStorage.setItem("user_id",data.id)
+                localStorage.setItem("user_id",data.id);
 
                 if (data.rol == "Usuario") {
                     navigate("/catalogo");

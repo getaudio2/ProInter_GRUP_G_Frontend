@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 
-const Carrito = ({ usuarioid }) => {
+const Carrito = ({ userId: propUserId }) => {
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchCart = async (id) => {
+  const fetchCart = async (user_id) => {
     try {
-      const response = await fetch(`http://localhost:8000/api/orders/${id}/`);
+      const response = await fetch(`http://localhost:8000/api/orders/${user_id}/`);
       const data = await response.json();
       if (response.ok && data.length > 0) {
-        const lastOrder = data[data.length - 1]; // Última orden (carrito actual)
+        const lastOrder = data[data.length - 1];
         setOrder(lastOrder);
       } else {
         setOrder(null);
@@ -22,7 +22,7 @@ const Carrito = ({ usuarioid }) => {
   };
 
   useEffect(() => {
-    let id = usuarioid;
+    let id = propUserId || localStorage.getItem("user_id");
     if (!id) {
       const match = document.cookie.match(/(^|;\s*)id\s*=\s*([^;]+)/);
       if (match) {
@@ -36,7 +36,7 @@ const Carrito = ({ usuarioid }) => {
       console.error("No se encontró el ID de usuario.");
       setLoading(false);
     }
-  }, [usuarioid]);
+  }, [propUserId]);
 
   const handleDeleteItem = async (itemId) => {
     try {
@@ -64,8 +64,8 @@ const Carrito = ({ usuarioid }) => {
       });
 
       if (response.ok) {
-        // Refresca el carrito
-        fetchCart(order.id);
+        const user_id = propUserId || localStorage.getItem("user_id");
+        fetchCart(user_id);
       }
     } catch (err) {
       console.error('Error al actualizar cantidad:', err);
@@ -73,7 +73,7 @@ const Carrito = ({ usuarioid }) => {
   };
 
   if (loading) return <p>Cargando carrito...</p>;
-  if (!order) return <p>No hay productos en tu carrito.</p>;
+  if (!order || !order.item_orders?.length) return <p>No hay productos en tu carrito.</p>;
 
   return (
     <div className="carrito">

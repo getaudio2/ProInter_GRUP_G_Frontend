@@ -12,6 +12,7 @@ import Profile from './Profile';
 import Inici  from './Inici'; 
 import Payment from './Payment';
 import Confirmation from './PaymentConfirm';
+import Carrito from "./Carrito.jsx";
 
 
 function App() {
@@ -24,7 +25,7 @@ function App() {
 
         <Route path="/catalogo" element={<CatalogoPage />} />
         <Route path="/producto/:id" element={<ProductoDetalle />} />
-
+        <Route path="/carrito" element={<Carrito />} />
 
         <Route path="/" element={<Inici />} />
         <Route path="/perfil" element={<Profile />} />
@@ -32,7 +33,6 @@ function App() {
         <Route path="/payment/confirmation" element={<Confirmation />} />
 
       </Routes>
-      <Registro/>
     </BrowserRouter>
     
   )
