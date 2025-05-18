@@ -1,19 +1,55 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import './App.css'
 import Login from './components/login/Login.jsx'
-//import MainPage from './components/main-page/MainPage.jsx'
+import CatalogoPage from './components/catalogo/CatalogoPage.jsx'
+import ProductoDetalle from "./components/producto/ProductoDetalle.jsx";
+import Header from "./components/inici/Header.jsx";
 
-function App() {
+import Profile from './Profile';
+import Inici  from './Inici'; 
+import Payment from './Payment';
+import Confirmation from './PaymentConfirm';
+import Carrito from "./Carrito.jsx";
+import Nosotros from "./SobreNosotros.jsx"
+import Admin from "./components/admin/Admin.jsx";
+import DetalleOrden from "./components/perfil/OrderCompleta.jsx";
+import Registro from "./components/registro/Register.jsx";
+
+
+
+function AppContent() {
+  const location = useLocation();
+  const hideHeaderPaths = ['/admin'];
+
+  const shouldShowHeader = !hideHeaderPaths.includes(location.pathname);
 
   return (
-    <BrowserRouter>
+    <>
+      {shouldShowHeader && <Header />}
       <Routes>
+        <Route path="" element={<Inici />} />
         <Route path="/login" element={<Login />} />
-        {//<Route path="/main-page" element={<MainPage />} />
-        }
+        <Route path="/catalogo" element={<CatalogoPage />} />
+        <Route path="/producto/:id" element={<ProductoDetalle />} />
+        <Route path="/carrito" element={<Carrito />} />
+        <Route path="/perfil" element={<Profile />} />
+        <Route path="/payment" element={<Payment />} />
+        <Route path="/payment/confirmation" element={<Confirmation />} />
+        <Route path="/orders/:id" element={<DetalleOrden />} />
+        <Route path="/Nosotros" element={<Nosotros />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/registro" element={<Registro />} />
       </Routes>
-    </BrowserRouter>
-  )
+    </>
+  );
 }
 
-export default App
+function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
+    </BrowserRouter>
+  );
+}
+
+export default App;
