@@ -73,7 +73,7 @@ const handleSubmit = async (event) => {
 
   const handleCancel = async () => {
     if (!orderId) {
-      navigate('/perfil');
+      navigate('/carrito');
       return;
     }
 
@@ -86,7 +86,7 @@ const handleSubmit = async (event) => {
         throw new Error(`Error eliminando la orden: ${response.statusText}`);
       }
 
-      navigate('/perfil');
+      navigate('/carrito');
     } catch (error) {
       console.error(error);
     }
