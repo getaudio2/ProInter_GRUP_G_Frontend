@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 function getCookie(name) {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(';').shift();
+  if (parts.length === 2) return parts.pop().split(";").shift();
   return null;
 }
 
@@ -21,7 +21,8 @@ const Profile = () => {
     fetch(`http://127.0.0.1:8000/api/orders/${userId}/`)
       .then((res) => res.json())
       .then((data) => {
-        setOrders(data);
+
+        setOrders(Array.isArray(data) ? data : []);
       })
       .catch((err) => console.error("Error al obtener órdenes", err));
   }, [userId]);
@@ -36,6 +37,9 @@ const Profile = () => {
       })
       .catch((err) => console.error("Error al obtener usuario", err));
   }, [userId]);
+
+  // Filtrar órdenes completadas
+  const completedOrders = orders.filter((order) => order.estat === "Completada");
 
   return (
     <>
@@ -68,12 +72,12 @@ const Profile = () => {
         </div>
 
         <div className="orders-section">
-          <h3>Mis Órdenes:</h3>
+          <h3>Mis Pedidos:</h3>
           <div className="orders">
-              {Array.isArray(orders) && orders.length > 0 ? (
-              orders.map((order) => <Order key={order.id} order={order} />)
+            {completedOrders.length > 0 ? (
+              completedOrders.map((order) => <Order key={order.id} order={order} />)
             ) : (
-              <p>No tienes órdenes registradas.</p>
+              <p>No tienes pedidos realizados.</p>
             )}
           </div>
         </div>
