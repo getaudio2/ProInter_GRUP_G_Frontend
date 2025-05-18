@@ -6,7 +6,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 export default function ProductoDetalle() {
     const { id } = useParams();
     const navigate = useNavigate();
-    const navigate = useNavigate();
     const [product, setProduct] = useState(null);
     const [hovered, setHovered] = useState(0);
     const [selected, setSelected] = useState(0);

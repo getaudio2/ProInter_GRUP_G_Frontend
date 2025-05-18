@@ -46,7 +46,7 @@ export default function Sidebar({ onCategoryChange, nameFilter, onNameFilterChan
                     onChange={handleNameFilterChange}
                 />
             </div>
-            <h3>CategorÃ­as</h3>
+            <h3>Categorías</h3>
             {categories.map((categoria, index) => (
                 <div key={index}>
                     <label>
