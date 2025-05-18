@@ -6,7 +6,9 @@
     background-image: url('https://assets.pokemon.com//assets/cms2-es-es/img/misc/virtual-backgrounds/go/pokestop.jpg');
     background-size: cover;
     padding: 20px;
-     
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 20px;
+
 }
 
 .login-card {
