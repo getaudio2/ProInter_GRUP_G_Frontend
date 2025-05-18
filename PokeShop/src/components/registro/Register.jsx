@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './register.css';
 
 const Registro = () => {
@@ -10,6 +11,7 @@ const Registro = () => {
   });
 
   const [mensaje, setMensaje] = useState('');
+  const navigate = useNavigate(); 
 
   const handleChange = (e) => {
     setFormData({
@@ -32,7 +34,12 @@ const Registro = () => {
 
       if (response.ok) {
         setMensaje('Usuario creado exitosamente');
-        setTimeout(() => setMensaje(''), 4000);
+
+        setTimeout(() => {
+          setMensaje('');
+          navigate('/login');
+        }, 2000);
+
         setFormData({
           username: '',
           email: '',

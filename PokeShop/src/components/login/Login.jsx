@@ -20,12 +20,11 @@ function Login() {
             if (response.ok) {
                 console.log("Login successful:", data);
                 document.cookie = "id=" + data.id + ";";
-                if(data.rol == "usuario") {
+                if (data.rol === "usuario") {
                     navigate("/catalogo");
-                }else{
+                } else {
                     navigate("/admin");
                 }
-
             } else {
                 console.error("Login failed:", data);
                 alert(data.error || "Login failed");
@@ -53,6 +52,9 @@ function Login() {
                 />
                 <button type="submit">Iniciar sesión</button>
             </form>
+
+            <p>¿No tienes cuenta?</p>
+            <button onClick={() => navigate("/registro")}>Ir a Registro</button>
         </>
     );
 }
