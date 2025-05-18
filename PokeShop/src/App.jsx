@@ -13,6 +13,7 @@ import Carrito from "./Carrito.jsx";
 import Nosotros from "./SobreNosotros.jsx"
 import Admin from "./components/admin/Admin.jsx";
 import DetalleOrden from "./components/perfil/OrderCompleta.jsx";
+import Registro from "./components/registro/Register.jsx";
 
 
 
@@ -26,18 +27,18 @@ function AppContent() {
     <>
       {shouldShowHeader && <Header />}
       <Routes>
-        <Route path="/" element={<Inici />} />
+        <Route path="" element={<Inici />} />
         <Route path="/login" element={<Login />} />
         <Route path="/catalogo" element={<CatalogoPage />} />
         <Route path="/producto/:id" element={<ProductoDetalle />} />
         <Route path="/carrito" element={<Carrito />} />
-        <Route path="" element={<Inici />} />
         <Route path="/perfil" element={<Profile />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/payment/confirmation" element={<Confirmation />} />
         <Route path="/orders/:id" element={<DetalleOrden />} />
         <Route path="/Nosotros" element={<Nosotros />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/registro" element={<Registro />} />
       </Routes>
     </>
   );

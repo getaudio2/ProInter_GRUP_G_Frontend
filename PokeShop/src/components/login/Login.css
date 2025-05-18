@@ -1,4 +1,4 @@
-.registro-container {
+.login-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -6,9 +6,10 @@
     background-image: url('https://assets.pokemon.com//assets/cms2-es-es/img/misc/virtual-backgrounds/go/pokestop.jpg');
     background-size: cover;
     padding: 20px;
+     
 }
 
-.registro-card {
+.login-card {
     background: white;
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -18,11 +19,11 @@
     transition: all 0.3s ease;
 }
 
-.registro-card:hover {
+.login-card:hover {
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
 }
 
-.registro-title {
+.login-title {
     color: #2d3748;
     text-align: center;
     margin-bottom: 30px;
@@ -30,13 +31,25 @@
     font-weight: 600;
 }
 
-.registro-form {
+.login-form {
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-.registro-input {
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-label {
+    color: #4a5568;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.form-input {
     padding: 12px 16px;
     border: 1px solid #e2e8f0;
     border-radius: 8px;
@@ -44,13 +57,13 @@
     transition: all 0.3s ease;
 }
 
-.registro-input:focus {
+.form-input:focus {
     outline: none;
     border-color: #667eea;
     box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
-.registro-button {
+.login-button {
     background: #667eea;
     color: white;
     border: none;
@@ -60,20 +73,14 @@
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
+    margin-top: 10px;
 }
 
-.registro-button:hover {
+.login-button:hover {
     background: #5a67d8;
     transform: translateY(-2px);
 }
 
-.registro-button:active {
+.login-button:active {
     transform: translateY(0);
-}
-
-.registro-mensaje {
-    margin-top: 10px;
-    text-align: center;
-    color: #2d3748;
-    font-size: 14px;
 }
