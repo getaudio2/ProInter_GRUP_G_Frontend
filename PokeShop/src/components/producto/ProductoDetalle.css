@@ -115,6 +115,30 @@
     color: #555;
 }
 
+.back-button-container {
+    width: 100%;
+    margin-bottom: 1.5rem;
+}
+
+.back-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: none;
+    border: none;
+    color: #2a7f62;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.back-button:hover {
+    background-color: #f0f0f0;
+    color: #1f5e48;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
     .product-detail {
