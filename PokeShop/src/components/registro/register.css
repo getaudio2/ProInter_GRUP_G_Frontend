@@ -1,44 +1,79 @@
 .registro-container {
-    max-width: 400px;
-    margin: 40px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url('https://assets.pokemon.com//assets/cms2-es-es/img/misc/virtual-backgrounds/go/pokestop.jpg');
+    background-size: cover;
     padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-family: sans-serif;
-  }
-  
-  .registro-container h2 {
+}
+
+.registro-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    width: 100%;
+    max-width: 400px;
+    transition: all 0.3s ease;
+}
+
+.registro-card:hover {
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.registro-title {
+    color: #2d3748;
     text-align: center;
-  }
-  
-  .registro-form {
+    margin-bottom: 30px;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.registro-form {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-  }
-  
-  .registro-input,
-  .registro-select {
-    padding: 8px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-  }
-  
-  .registro-button {
-    background-color: #4CAF50;
+    gap: 20px;
+}
+
+.registro-input {
+    padding: 12px 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.registro-input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.registro-button {
+    background: #667eea;
     color: white;
-    padding: 10px;
     border: none;
-    border-radius: 4px;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
-  }
-  
-  .registro-mensaje {
-    margin-top: 15px;
+    transition: all 0.3s ease;
+}
+
+.registro-button:hover {
+    background: #5a67d8;
+    transform: translateY(-2px);
+}
+
+.registro-button:active {
+    transform: translateY(0);
+}
+
+.registro-mensaje {
+    margin-top: 10px;
     text-align: center;
-    padding: 10px;
-    border-radius: 4px;
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-  }
+    color: #2d3748;
+    font-size: 14px;
+}

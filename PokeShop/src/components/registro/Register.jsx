@@ -57,8 +57,9 @@ const Registro = () => {
   };
 
   return (
-    <div className="registro-container">
-      <h2>Registro</h2>
+  <div className="registro-container">
+    <div className="registro-card">
+      <h2 className="registro-title">Registro</h2>
       <form onSubmit={handleSubmit} className="registro-form">
         <input
           type="text"
@@ -91,7 +92,8 @@ const Registro = () => {
       </form>
       {mensaje && <p className="registro-mensaje">{mensaje}</p>}
     </div>
-  );
+  </div>
+);
 };
 
 export default Registro;
