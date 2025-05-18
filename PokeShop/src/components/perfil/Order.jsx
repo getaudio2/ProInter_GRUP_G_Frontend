@@ -5,9 +5,9 @@ import "./Order.css";
 export default function Order({ order }) {
   return (
     <div className="order-card">
-      <header className="order-header">
+      <div className="order-header">
         <h3>Orden #{order.id}</h3>
-      </header>
+      </div>
 
       <p className="order-total">
         Total: <strong>{order.preu_total} €</strong>

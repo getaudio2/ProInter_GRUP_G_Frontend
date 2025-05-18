@@ -69,11 +69,13 @@ const Profile = () => {
 
         <div className="orders-section">
           <h3>Mis Órdenes:</h3>
-          {Array.isArray(orders) && orders.length > 0 ? (
-            orders.map((order) => <Order key={order.id} order={order} />)
-          ) : (
-            <p>No tienes órdenes registradas.</p>
-          )}
+          <div className="orders">
+              {Array.isArray(orders) && orders.length > 0 ? (
+              orders.map((order) => <Order key={order.id} order={order} />)
+            ) : (
+              <p>No tienes órdenes registradas.</p>
+            )}
+          </div>
         </div>
       </section>
     </>
