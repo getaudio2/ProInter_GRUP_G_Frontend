@@ -1,43 +1,17 @@
 import "./ProductoDetalle.css";
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 export default function ProductoDetalle() {
     const { id } = useParams();
-    const navigate = useNavigate();
-    const navigate = useNavigate();
     const [product, setProduct] = useState(null);
+    const [carrito, setCarrito] = useState(() => localStorage.getItem("cart_id"));
     const [hovered, setHovered] = useState(0);
     const [selected, setSelected] = useState(0);
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
-    const getCookie = (name) => {
-        const match = document.cookie.match(new RegExp('(^|;)\\s*' + name + '=([^;]+)'));
-        return match ? match[2] : null;
-    };
-
-    const setCookie = (name, value, days = 7) => {
-        const expires = new Date(Date.now() + days * 864e5).toUTCString();
-        document.cookie = `${name}=${value}; expires=${expires}; path=/`;
-    };
-
-    const user_id = getCookie("id");
-    const [carrito, setCarrito] = useState(() => getCookie("cart_id"));
-    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-
-    const getCookie = (name) => {
-        const match = document.cookie.match(new RegExp('(^|;)\\s*' + name + '=([^;]+)'));
-        return match ? match[2] : null;
-    };
-
-    const setCookie = (name, value, days = 7) => {
-        const expires = new Date(Date.now() + days * 864e5).toUTCString();
-        document.cookie = `${name}=${value}; expires=${expires}; path=/`;
-    };
-
-    const user_id = getCookie("id");
-    const [carrito, setCarrito] = useState(() => getCookie("cart_id"));
+    const user_id_match = document.cookie.match(/(^|;\s*)id\s*=\s*([^;]+)/);
+    const user_id = user_id_match ? user_id_match[2] : null;
 
     useEffect(() => {
         fetch(`http://localhost:8000/api/productos/${id}/`)
@@ -83,8 +57,7 @@ export default function ProductoDetalle() {
                 const data = await response.json();
                 cartId = data.id;
                 setCarrito(cartId);
-                setCookie("cart_id", cartId);
-                setCookie("cart_id", cartId);
+                localStorage.setItem("cart_id", cartId);
             } catch (err) {
                 return console.error("Error creating cart:", err);
             }
@@ -128,6 +101,7 @@ export default function ProductoDetalle() {
                 console.log("New item added to cart:", itemData);
             }
 
+            // Mensaje confirmación añadir al carrito
             setShowSuccessMessage(true);
             setTimeout(() => setShowSuccessMessage(false), 3000);
 
@@ -140,26 +114,24 @@ export default function ProductoDetalle() {
 
     return (
         <div className="product-main">
-            <div className="back-button-container">
-                {showSuccessMessage && (
-                    <div className="success-message">
-                        Producto añadido correctamente al carrito
-                    </div>
-                )}
-                <button className="back-button" onClick={() => navigate(-1)}>
-                    ← Volver al catálogo
-                </button>
-            </div>
-            <div className="back-button-container">
-                {showSuccessMessage && (
-                    <div className="success-message">
-                        Producto añadido correctamente al carrito
-                    </div>
-                )}
-                <button className="back-button" onClick={() => navigate(-1)}>
-                    ← Volver al catálogo
-                </button>
-            </div>
+
+            {showSuccessMessage && (
+                <div style={{
+                    position: "fixed",
+                    top: 20,
+                    right: 20,
+                    backgroundColor: "#4caf50",
+                    color: "white",
+                    padding: "10px 20px",
+                    borderRadius: "5px",
+                    zIndex: 9999,
+                    boxShadow: "0 2px 6px rgba(0,0,0,0.3)",
+                    fontWeight: "bold",
+                }}>
+                    Producto añadido correctamente al carrito
+                </div>
+            )}
+
             <div className="product-detail">
                 <div className="product-img">
                     <img src={product.img} alt="product-img" />
