@@ -65,21 +65,21 @@ export default function PaymentConfirm() {
       });
   }, []);
 
-  if (loading) return <p>Carregant...</p>;
+  if (loading) return <p>Cargando...</p>;
   if (error) return <p>Error: {error}</p>;
 
   return (
     <div>
-      <h2>Confirmació de Pagament</h2>
-      <p>El teu pagament s'ha realitzat correctament.</p>
+      <h2>Confirmación de pago</h2>
+      <p>Tu pedido se ha realizado correctamente.</p>
 
       <div
         style={{ display: "flex", justifyContent: "space-between", marginTop: 20 }}
       >
-        <button onClick={() => navigate("/catalogo")}>Tornar a la Botiga</button>
+        <button onClick={() => navigate("/catalogo")}>Volver a la tienda</button>
         {orderId ? (
           <button onClick={() => navigate(`/orders/${orderId}`)}>
-            Veure el Meu Pedido
+            Ver mi pedido
           </button>
         ) : (
           <button disabled>No hi ha comanda per mostrar</button>
