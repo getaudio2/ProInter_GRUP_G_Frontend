@@ -1,0 +1,56 @@
+
+.sobrenosotros {
+  min-height: 100vh;
+  background-image: url("https://assets.pokemon.com//assets/cms2-es-es/img/misc/virtual-backgrounds/go/pokemon-party.jpg");
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: cover;
+  background-attachment: fixed;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 6rem; 
+}
+
+
+.sobrenosotros-container {
+  max-width: 700px;
+  width: 100%;
+  margin: 0 auto 4rem auto;
+  padding: 2rem;
+  background: rgba(240, 248, 255, 0.95); 
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+  color: #2d2d2d;
+}
+
+.historia-section,
+.contact-section {
+  margin-bottom: 3rem;
+}
+
+.historia-section h2,
+.contact-section h2 {
+  margin-bottom: 1.5rem;
+  color: #ef5350; 
+  text-align: center;
+  font-weight: 700;
+}
+
+.historia-section p,
+.contact-section p {
+  line-height: 1.7;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.contact-section ul {
+  list-style-type: none;
+  padding-left: 0;
+  font-size: 1rem;
+}
+
+.contact-section li {
+  margin-bottom: 0.6rem;
+}

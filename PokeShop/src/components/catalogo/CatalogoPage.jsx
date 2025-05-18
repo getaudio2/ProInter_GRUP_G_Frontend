@@ -6,7 +6,9 @@ import Header from "../inici/Header.jsx";
 
 export default function CatalogoPage() {
     const [selectedCategory, setSelectedCategory] = useState(null);
+    const [nameFilter, setNameFilter] = useState("");
     const [productos, setProductos] = useState([]);
+    const [allProductos, setAllProductos] = useState([]);
 
     useEffect(() => {
         const fetchProductos = async () => {
@@ -22,7 +24,7 @@ export default function CatalogoPage() {
 
                 const data = await response.json();
                 if (response.ok) {
-                    setProductos(data);
+                    setAllProductos(data);
                 } else {
                     console.error("Error amb el fetch de productes:", data);
                 }
@@ -34,9 +36,20 @@ export default function CatalogoPage() {
         fetchProductos();
     }, [selectedCategory]);
 
+    useEffect(() => {
+        const filtered = allProductos.filter(producto =>
+            producto.nom.toLowerCase().includes(nameFilter.toLowerCase())
+        );
+        setProductos(filtered);
+    }, [nameFilter, allProductos]);
+
     return (
         <div style={{ display: "flex", minHeight: "100vh" }}>
-            <Sidebar onCategoryChange={setSelectedCategory} />
+            <Sidebar 
+                onCategoryChange={setSelectedCategory} 
+                nameFilter={nameFilter}
+                onNameFilterChange={setNameFilter}
+            />
             <div style={{ flex: 1, padding: "20px" }}>
                 <Catalogo productos={productos} selectedCategory={selectedCategory} />
             </div>

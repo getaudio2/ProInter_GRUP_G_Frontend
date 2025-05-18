@@ -1,22 +1,22 @@
-/* Contenedor principal del perfil */
+
 .profile-container {
     padding: 3rem;
     max-width: 100vw;
     margin: 0 auto;
-    background-color: #f4f4f9; /* Fondo suave */
+    background-color: #f4f4f9; 
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centra los elementos horizontalmente */
-    height: 100vh; /* Ocupa toda la altura de la pantalla */
-    font-family: 'Arial', sans-serif; /* Tipografía */
+    align-items: center; 
+    height: 100vh; 
+    font-family: 'Arial', sans-serif; 
   }
   
-  /* Información del usuario centrada */
+  
   .profile-info {
     text-align: center;
     color: #333;
     font-size: 1.1rem;
-    margin-bottom: 2rem; /* Separación entre info de usuario y pedidos */
+    margin-bottom: 2rem; 
   }
   
   .profile-avatar img {
@@ -25,7 +25,7 @@
     border-radius: 50%;
     background-color: #ddd;
     object-fit: cover;
-    border: 5px solid #ffcc00; /* Borde dorado */
+    border: 5px solid #ffcc00; 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     margin-bottom: 1rem;
   }
@@ -35,11 +35,11 @@
   }
   
   .profile-info strong {
-    color: #ffcc00; /* Dorado */
+    color: #ffcc00; 
     font-size: 1.2rem;
   }
   
-  /* Sección de pedidos */
+  
   .orders-section {
     display: flex;
     flex-direction: column;
@@ -49,7 +49,7 @@
     padding: 2rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 100%;
-    margin-top: 3rem; /* Separación desde la información del usuario */
+    margin-top: 3rem; 
   }
   
   .orders-carousel {
@@ -62,7 +62,7 @@
   
   .order-card {
     width: 23%;
-    border: 2px solid #ffcc00; /* Borde dorado */
+    border: 2px solid #ffcc00; 
     padding: 1.5rem;
     background-color: #fff;
     flex-shrink: 0;

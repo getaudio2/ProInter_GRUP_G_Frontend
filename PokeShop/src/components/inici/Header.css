@@ -61,3 +61,7 @@ header button {
 header button:hover {
   color: #ff0000;
 }
+
+.icons{
+  gap: 15px;
+}
