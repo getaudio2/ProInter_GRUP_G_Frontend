@@ -8,9 +8,10 @@ export default function ProductoDetalle() {
     const [carrito, setCarrito] = useState(() => localStorage.getItem("cart_id"));
     const [hovered, setHovered] = useState(0);
     const [selected, setSelected] = useState(0);
-    const user_id = localStorage.getItem("user_id");
 
-    // Get product detail
+    const user_id_match = document.cookie.match(/(^|;\s*)id\s*=\s*([^;]+)/);
+    const user_id = user_id_match ? user_id_match[2] : null;
+
     useEffect(() => {
         fetch(`http://localhost:8000/api/productos/${id}/`)
             .then(res => res.json())
@@ -35,7 +36,6 @@ export default function ProductoDetalle() {
     };
 
     const addToCart = async () => {
-        // Check if user is logged in
         if (!user_id) {
             alert("Please log in to add items to cart");
             return;
@@ -43,7 +43,6 @@ export default function ProductoDetalle() {
 
         let cartId = carrito;
 
-        // We create the cart if it doesn't exist
         if (!cartId) {
             try {
                 const response = await fetch("http://localhost:8000/api/carritos/create/", {
@@ -64,18 +63,16 @@ export default function ProductoDetalle() {
         }
 
         try {
-            // We check if the product is already in the cart
             const itemsResponse = await fetch(`http://localhost:8000/api/item-carrito/`);
             const allItems = await itemsResponse.json();
-            
-            const existingItem = allItems.find(item => 
+
+            const existingItem = allItems.find(item =>
                 item.cart_id == cartId && item.product_id == product.id
             );
 
             if (existingItem) {
-                // If item exists, we add +1 to the quantity
                 const updateResponse = await fetch(
-                    `http://localhost:8000/api/item-carrito/update/${existingItem.id}/`, 
+                    `http://localhost:8000/api/item-carrito/update/${existingItem.id}/`,
                     {
                         method: 'PATCH',
                         headers: { 'Content-Type': 'application/json' },
@@ -88,7 +85,6 @@ export default function ProductoDetalle() {
                 if (!updateResponse.ok) throw new Error("Failed to update item quantity");
                 console.log("Item quantity updated:", existingItem.id);
             } else {
-                // If item doesn't exist, we create it
                 const createResponse = await fetch("http://localhost:8000/api/item-carrito/create/", {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -136,7 +132,10 @@ export default function ProductoDetalle() {
                     <button className="add-to-cart-btn" onClick={addToCart}>Añadir al carrito</button>
                 </div>
             </div>
-            <p className="product-description">{product.descripcio}</p>
+            <div className="product-description">
+                <h3>Descripción</h3>
+                <p>{product.descripcio}</p>
+            </div>
         </div>
     );
 }
