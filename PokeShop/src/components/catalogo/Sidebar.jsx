@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./Sidebar.css";
 
-export default function Sidebar({ onCategoryChange }) {
+export default function Sidebar({ onCategoryChange, nameFilter, onNameFilterChange }) {
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(null);
 
@@ -9,6 +9,10 @@ export default function Sidebar({ onCategoryChange }) {
         const newCategory = selectedCategory === category ? null : category;
         setSelectedCategory(newCategory);
         onCategoryChange(newCategory);
+    };
+
+    const handleNameFilterChange = (e) => {
+        onNameFilterChange(e.target.value);
     };
 
     useEffect(() => {
@@ -34,6 +38,14 @@ export default function Sidebar({ onCategoryChange }) {
 
     return (
         <div className="sidebar">
+            <div className="search-container">
+                <input
+                    type="text"
+                    placeholder="Buscar productos..."
+                    value={nameFilter}
+                    onChange={handleNameFilterChange}
+                />
+            </div>
             <h3>Categorías</h3>
             {categories.map((categoria, index) => (
                 <div key={index}>

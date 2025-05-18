@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import "./Carrito.css"
 const Carrito = ({ usuarioid }) => {
   const [carrito, setCarrito] = useState(null);
   const [items, setItems] = useState([]);

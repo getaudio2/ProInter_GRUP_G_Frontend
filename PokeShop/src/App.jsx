@@ -24,11 +24,11 @@ function AppContent() {
     <>
       {shouldShowHeader && <Header />}
       <Routes>
+        <Route path="/" element={<Inici />} />
         <Route path="/login" element={<Login />} />
         <Route path="/catalogo" element={<CatalogoPage />} />
         <Route path="/producto/:id" element={<ProductoDetalle />} />
         <Route path="/carrito" element={<Carrito />} />
-        <Route path="/" element={<Inici />} />
         <Route path="/perfil" element={<Profile />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/payment/confirmation" element={<Confirmation />} />

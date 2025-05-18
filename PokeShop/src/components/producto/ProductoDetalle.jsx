@@ -1,6 +1,7 @@
 import "./ProductoDetalle.css";
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 export default function ProductoDetalle() {
     const { id } = useParams();
@@ -8,6 +9,20 @@ export default function ProductoDetalle() {
     const [product, setProduct] = useState(null);
     const [hovered, setHovered] = useState(0);
     const [selected, setSelected] = useState(0);
+    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
+    const getCookie = (name) => {
+        const match = document.cookie.match(new RegExp('(^|;)\\s*' + name + '=([^;]+)'));
+        return match ? match[2] : null;
+    };
+
+    const setCookie = (name, value, days = 7) => {
+        const expires = new Date(Date.now() + days * 864e5).toUTCString();
+        document.cookie = `${name}=${value}; expires=${expires}; path=/`;
+    };
+
+    const user_id = getCookie("id");
+    const [carrito, setCarrito] = useState(() => getCookie("cart_id"));
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
     const getCookie = (name) => {
@@ -68,6 +83,7 @@ export default function ProductoDetalle() {
                 cartId = data.id;
                 setCarrito(cartId);
                 setCookie("cart_id", cartId);
+                setCookie("cart_id", cartId);
             } catch (err) {
                 return console.error("Error creating cart:", err);
             }
@@ -123,6 +139,16 @@ export default function ProductoDetalle() {
 
     return (
         <div className="product-main">
+            <div className="back-button-container">
+                {showSuccessMessage && (
+                    <div className="success-message">
+                        Producto añadido correctamente al carrito
+                    </div>
+                )}
+                <button className="back-button" onClick={() => navigate(-1)}>
+                    ← Volver al catálogo
+                </button>
+            </div>
             <div className="back-button-container">
                 {showSuccessMessage && (
                     <div className="success-message">
