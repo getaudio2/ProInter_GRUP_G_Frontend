@@ -15,10 +15,10 @@ const Header = () => {
       <nav className="navegador">
         <Link to="/">Inicio</Link>
         <Link to="/catalogo">Tienda</Link>
-        <Link to="/contacto">Contacto</Link>
+        <Link to="/nosotros">Sobre Nosotros</Link>
       </nav>
 
-      <div>
+      <div className="icons">
         <Link to="/carrito">
           <button>🛒</button>
         </Link>
