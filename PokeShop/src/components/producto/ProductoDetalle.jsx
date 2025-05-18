@@ -1,27 +1,17 @@
 import "./ProductoDetalle.css";
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 export default function ProductoDetalle() {
     const { id } = useParams();
-    const navigate = useNavigate();
     const [product, setProduct] = useState(null);
+    const [carrito, setCarrito] = useState(() => localStorage.getItem("cart_id"));
     const [hovered, setHovered] = useState(0);
     const [selected, setSelected] = useState(0);
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
-    const getCookie = (name) => {
-        const match = document.cookie.match(new RegExp('(^|;)\\s*' + name + '=([^;]+)'));
-        return match ? match[2] : null;
-    };
-
-    const setCookie = (name, value, days = 7) => {
-        const expires = new Date(Date.now() + days * 864e5).toUTCString();
-        document.cookie = `${name}=${value}; expires=${expires}; path=/`;
-    };
-
-    const user_id = getCookie("id");
-    const [carrito, setCarrito] = useState(() => getCookie("cart_id"));
+    const user_id_match = document.cookie.match(/(^|;\s*)id\s*=\s*([^;]+)/);
+    const user_id = user_id_match ? user_id_match[2] : null;
 
     useEffect(() => {
         fetch(`http://localhost:8000/api/productos/${id}/`)
@@ -32,7 +22,7 @@ export default function ProductoDetalle() {
             })
             .catch(err => console.error(err));
     }, [id]);
- 
+
     const handleRate = async (rating) => {
         setSelected(rating);
         try {
@@ -45,15 +35,15 @@ export default function ProductoDetalle() {
             console.error("Error updating rating:", err);
         }
     };
- 
+
     const addToCart = async () => {
         if (!user_id) {
             alert("Please log in to add items to cart");
             return;
         }
- 
+
         let cartId = carrito;
- 
+
         if (!cartId) {
             try {
                 const response = await fetch("http://localhost:8000/api/carritos/create/", {
@@ -61,26 +51,26 @@ export default function ProductoDetalle() {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ user_id }),
                 });
- 
+
                 if (!response.ok) throw new Error("Failed to create cart");
- 
+
                 const data = await response.json();
                 cartId = data.id;
                 setCarrito(cartId);
-                setCookie("cart_id", cartId);
+                localStorage.setItem("cart_id", cartId);
             } catch (err) {
                 return console.error("Error creating cart:", err);
             }
         }
- 
+
         try {
             const itemsResponse = await fetch(`http://localhost:8000/api/item-carrito/`);
             const allItems = await itemsResponse.json();
- 
+
             const existingItem = allItems.find(item =>
                 item.cart_id == cartId && item.product_id == product.id
             );
- 
+
             if (existingItem) {
                 const updateResponse = await fetch(
                     `http://localhost:8000/api/item-carrito/update/${existingItem.id}/`,
@@ -92,7 +82,7 @@ export default function ProductoDetalle() {
                         }),
                     }
                 );
- 
+
                 if (!updateResponse.ok) throw new Error("Failed to update item quantity");
                 console.log("Item quantity updated:", existingItem.id);
             } else {
@@ -105,12 +95,13 @@ export default function ProductoDetalle() {
                         quantity: 1
                     }),
                 });
- 
+
                 if (!createResponse.ok) throw new Error("Failed to add product to cart");
                 const itemData = await createResponse.json();
                 console.log("New item added to cart:", itemData);
             }
 
+            // Mensaje confirmación añadir al carrito
             setShowSuccessMessage(true);
             setTimeout(() => setShowSuccessMessage(false), 3000);
 
@@ -118,21 +109,29 @@ export default function ProductoDetalle() {
             console.error("Error updating cart:", err);
         }
     };
- 
+
     if (!product) return <p>Cargando...</p>;
- 
+
     return (
         <div className="product-main">
-            <div className="back-button-container">
-                {showSuccessMessage && (
-                    <div className="success-message">
-                        Producto añadido correctamente al carrito
-                    </div>
-                )}
-                <button className="back-button" onClick={() => navigate(-1)}>
-                    ← Volver al catálogo
-                </button>
-            </div>
+
+            {showSuccessMessage && (
+                <div style={{
+                    position: "fixed",
+                    top: 20,
+                    right: 20,
+                    backgroundColor: "#4caf50",
+                    color: "white",
+                    padding: "10px 20px",
+                    borderRadius: "5px",
+                    zIndex: 9999,
+                    boxShadow: "0 2px 6px rgba(0,0,0,0.3)",
+                    fontWeight: "bold",
+                }}>
+                    Producto añadido correctamente al carrito
+                </div>
+            )}
+
             <div className="product-detail">
                 <div className="product-img">
                     <img src={product.img} alt="product-img" />

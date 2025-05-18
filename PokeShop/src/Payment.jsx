@@ -63,10 +63,9 @@ const handleSubmit = async (event) => {
     const data = await response.json();
     console.log('Orden actualizada:', data);
 
-    alert('Pago confirmado y orden actualizada correctamente.');
+
     navigate('/payment/confirmation');
   } catch (error) {
-    alert('Error al actualizar la orden: ' + error.message);
     console.error(error);
   }
 };
@@ -74,7 +73,6 @@ const handleSubmit = async (event) => {
 
   const handleCancel = async () => {
     if (!orderId) {
-      alert('Order ID no encontrado.');
       navigate('/perfil');
       return;
     }
@@ -88,10 +86,8 @@ const handleSubmit = async (event) => {
         throw new Error(`Error eliminando la orden: ${response.statusText}`);
       }
 
-      alert('Orden eliminada correctamente');
       navigate('/perfil');
     } catch (error) {
-      alert('Error al eliminar la orden: ' + error.message);
       console.error(error);
     }
   };
