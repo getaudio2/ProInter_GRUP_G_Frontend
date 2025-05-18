@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./Login.css"; // Import the CSS file
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -25,7 +26,6 @@ function Login() {
                 }else{
                     navigate("/admin");
                 }
-
             } else {
                 console.error("Login failed:", data);
                 alert(data.error || "Login failed");
@@ -36,24 +36,36 @@ function Login() {
     };
 
     return (
-        <>
-            <p>Login</p>
-            <form onSubmit={submitLogin}>
-                <p>Usuario:</p>
-                <input
-                    type="text"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-                <p>Contraseña:</p>
-                <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <button type="submit">Iniciar sesión</button>
-            </form>
-        </>
+        <div className="login-container">
+            <div className="login-card">
+                <h1 className="login-title">Iniciar Sesión</h1>
+                <form onSubmit={submitLogin} className="login-form">
+                    <div className="form-group">
+                        <label htmlFor="email" className="form-label">Usuario:</label>
+                        <input
+                            id="email"
+                            type="text"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="form-input"
+                            placeholder="Ingresa tu email"
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="password" className="form-label">Contraseña:</label>
+                        <input
+                            id="password"
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            className="form-input"
+                            placeholder="Ingresa tu contraseña"
+                        />
+                    </div>
+                    <button type="submit" className="login-button">Iniciar sesión</button>
+                </form>
+            </div>
+        </div>
     );
 }
 
