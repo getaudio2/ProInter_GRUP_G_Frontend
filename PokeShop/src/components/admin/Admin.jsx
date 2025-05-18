@@ -22,7 +22,7 @@ const Admin = () => {
     }
 
     try {
-      const res = await fetch(`http://localhost:8000/api/usuarios/${userId}/`);
+      const res = await fetch(`http://localhost:8000/api/users/${userId}/`);
       if (!res.ok) throw new Error("No se pudo obtener el usuario");
       const data = await res.json();
 
