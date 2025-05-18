@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './Payment.css';
 
 export default function Payment() {
@@ -9,51 +9,91 @@ export default function Payment() {
   const [cvv, setCvv] = useState('');
   const [saveMethod, setSaveMethod] = useState(false);
 
-  const navigate = useNavigate(); // Hook para redirección
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const queryParams = new URLSearchParams(location.search);
+  const orderId = parseInt(queryParams.get('orderId'), 10);
 
-    // Expresión regular para validar el número de tarjeta (tarjeta de 16 dígitos)
-    const cardNumberRegex = /^[0-9]{16}$/;
+const handleSubmit = async (event) => {
+  event.preventDefault();
 
-    // Expresión regular para validar el mes de expiración (MM)
-    const expiryMonthRegex = /^(0[1-9]|1[0-2])$/;
+ 
+  const cardNumberRegex = /^[0-9]{16}$/;
+  const expiryMonthRegex = /^(0[1-9]|1[0-2])$/;
+  const expiryYearRegex = /^[0-9]{2}$/;
+  const cvvRegex = /^[0-9]{3}$/;
 
-    // Expresión regular para validar el año de expiración (YY)
-    const expiryYearRegex = /^[0-9]{2}$/;
+  if (!cardNumber || !cardNumberRegex.test(cardNumber)) {
+    alert('Número de tarjeta inválido. Debe ser de 16 dígitos.');
+    return;
+  }
+  if (!expiryMonth || !expiryMonthRegex.test(expiryMonth)) {
+    alert('Mes de caducidad inválido. Debe ser entre 01 y 12.');
+    return;
+  }
+  if (!expiryYear || !expiryYearRegex.test(expiryYear)) {
+    alert('Año de caducidad inválido. Debe ser un número de 2 dígitos.');
+    return;
+  }
+  if (!cvv || !cvvRegex.test(cvv)) {
+    alert('CVV inválido. Debe ser un número de 3 dígitos.');
+    return;
+  }
 
-    // Expresión regular para validar el CVV (3 dígitos)
-    const cvvRegex = /^[0-9]{3}$/;
+  if (!orderId) {
+    alert('ID de la orden no encontrado.');
+    return;
+  }
 
-    // Validación de cada campo
-    if (!cardNumber || !cardNumberRegex.test(cardNumber)) {
-      alert('Número de tarjeta inválido. Debe ser de 16 dígitos.');
-      return;
+  try {
+    const response = await fetch(`http://localhost:8000/api/orders/${orderId}/update-status/`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ status: 'Completada' }), 
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || response.statusText);
     }
 
-    if (!expiryMonth || !expiryMonthRegex.test(expiryMonth)) {
-      alert('Mes de caducidad inválido. Debe ser entre 01 y 12.');
-      return;
-    }
+    const data = await response.json();
+    console.log('Orden actualizada:', data);
 
-    if (!expiryYear || !expiryYearRegex.test(expiryYear)) {
-      alert('Año de caducidad inválido. Debe ser un número de 2 dígitos.');
-      return;
-    }
-
-    if (!cvv || !cvvRegex.test(cvv)) {
-      alert('CVV inválido. Debe ser un número de 3 dígitos.');
-      return;
-    }
-
-    // Redirigir a la página de confirmación si todo es válido
+    alert('Pago confirmado y orden actualizada correctamente.');
     navigate('/payment/confirmation');
-  };
+  } catch (error) {
+    alert('Error al actualizar la orden: ' + error.message);
+    console.error(error);
+  }
+};
 
-  const handleCancel = () => {
-    // Redirigir a la página de usuario o a la página de inicio
-    navigate('/perfil  ');
+
+  const handleCancel = async () => {
+    if (!orderId) {
+      alert('Order ID no encontrado.');
+      navigate('/perfil');
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:8000/api/orders/delete/${orderId}/`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error eliminando la orden: ${response.statusText}`);
+      }
+
+      alert('Orden eliminada correctamente');
+      navigate('/perfil');
+    } catch (error) {
+      alert('Error al eliminar la orden: ' + error.message);
+      console.error(error);
+    }
   };
 
   return (
@@ -115,18 +155,6 @@ export default function Payment() {
               maxLength="3"
               required
             />
-          </label>
-        </div>
-
-        <div>
-          <label>
-            <input
-              type="checkbox"
-              name="saveMethod"
-              checked={saveMethod}
-              onChange={(e) => setSaveMethod(e.target.checked)}
-            />
-            Guardar mètode de pagament?
           </label>
         </div>
 
