@@ -21,9 +21,9 @@ function Login() {
             if (response.ok) {
                 console.log("Login successful:", data);
                 document.cookie = "id=" + data.id + ";";
-                if(data.rol == "usuario") {
-                    navigate("/catalogo");
-                }else{
+                if (data.rol === "usuario") {
+                    navigate("/");
+                } else {
                     navigate("/admin");
                 }
             } else {
@@ -63,6 +63,11 @@ function Login() {
                         />
                     </div>
                     <button type="submit" className="login-button">Iniciar sesión</button>
+
+                    <p>¿No tienes cuenta?</p>
+                    <button type="button" onClick={() => navigate("/registro")}>Registrate</button>
+
+
                 </form>
             </div>
         </div>
