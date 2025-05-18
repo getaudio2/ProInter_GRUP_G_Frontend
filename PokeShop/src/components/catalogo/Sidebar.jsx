@@ -34,7 +34,7 @@ export default function Sidebar({ onCategoryChange }) {
 
     return (
         <div className="sidebar">
-            <h3>Categories</h3>
+            <h3>Categorías</h3>
             {categories.map((categoria, index) => (
                 <div key={index}>
                     <label>
