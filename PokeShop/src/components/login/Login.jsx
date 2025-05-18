@@ -22,7 +22,7 @@ function Login() {
                 console.log("Login successful:", data);
                 document.cookie = "id=" + data.id + ";";
                 if (data.rol === "usuario") {
-                    navigate("/catalogo");
+                    navigate("/");
                 } else {
                     navigate("/admin");
                 }
