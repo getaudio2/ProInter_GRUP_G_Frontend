@@ -12,6 +12,8 @@ import Confirmation from './PaymentConfirm';
 import Carrito from "./Carrito.jsx";
 import Nosotros from "./SobreNosotros.jsx"
 import Admin from "./components/admin/Admin.jsx";
+import DetalleOrden from "./components/perfil/OrderCompleta.jsx";
+
 
 
 function AppContent() {
@@ -29,11 +31,12 @@ function AppContent() {
         <Route path="/catalogo" element={<CatalogoPage />} />
         <Route path="/producto/:id" element={<ProductoDetalle />} />
         <Route path="/carrito" element={<Carrito />} />
+        <Route path="" element={<Inici />} />
         <Route path="/perfil" element={<Profile />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/payment/confirmation" element={<Confirmation />} />
+        <Route path="/orders/:id" element={<DetalleOrden />} />
         <Route path="/Nosotros" element={<Nosotros />} />
-
         <Route path="/admin" element={<Admin />} />
       </Routes>
     </>
