@@ -1,23 +1,35 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Carrito = ({ usuarioid }) => {
   const [carrito, setCarrito] = useState(null);
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [message, setMessage] = useState('');
+  const navigate = useNavigate();
+
+  const obtenerUsuarioId = () => {
+    const match = document.cookie.match(/(^|;\s*)id\s*=\s*([^;]+)/);
+    return match ? match[2] : null;
+  };
 
   const fetchCart = async (userId) => {
     try {
       const resCarrito = await fetch(`http://localhost:8000/api/carritos/usuario/${userId}/`);
       if (!resCarrito.ok) throw new Error('No se pudo obtener el carrito');
 
-      const dataCarrito = await resCarrito.json();
-      setCarrito(dataCarrito);
+      const data = await resCarrito.json();
+      setCarrito(data.carrito);
+      localStorage.setItem("cart_id", data.carrito.id);
 
-      const resItems = await fetch(`http://localhost:8000/api/item-carrito/`);
-      const allItems = await resItems.json();
-
-      const itemsUsuario = allItems.filter(item => item.cart_id === dataCarrito.id);
-      setItems(itemsUsuario);
+      const enrichedItems = await Promise.all(
+        data.items.map(async (item) => {
+          const resProducto = await fetch(`http://localhost:8000/api/productos/${item.product_id}/`);
+          const producto = await resProducto.json();
+          return { ...item, product_id: producto };
+        })
+      );
+      setItems(enrichedItems);
     } catch (err) {
       console.error('Error al cargar el carrito:', err);
     } finally {
@@ -26,11 +38,7 @@ const Carrito = ({ usuarioid }) => {
   };
 
   useEffect(() => {
-    let id = usuarioid || localStorage.getItem("user_id");
-    if (!id) {
-      const match = document.cookie.match(/(^|;\s*)id\s*=\s*([^;]+)/);
-      if (match) id = match[2];
-    }
+    const id = Number(usuarioid || obtenerUsuarioId());
 
     if (id) {
       fetchCart(id);
@@ -40,9 +48,41 @@ const Carrito = ({ usuarioid }) => {
     }
   }, [usuarioid]);
 
+  const handleBuy = async () => {
+  setMessage('Creando orden...');
+  const userId = Number(usuarioid || obtenerUsuarioId());
+
+  if (!userId || isNaN(userId)) {
+    setMessage('No se encontró un ID de usuario válido.');
+    return;
+  }
+
+  try {
+    const response = await fetch('http://127.0.0.1:8000/api/orders/add-items/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user_id: userId }),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      const orderId = data.order.id;
+      setMessage('Orden creada correctamente. Redirigiendo a pago...');
+      navigate(`/payment?orderId=${orderId}`);
+    } else {
+      const errorData = await response.json();
+      setMessage(`Error al crear la orden: ${errorData.error || 'Error desconocido'}`);
+    }
+  } catch (error) {
+    console.error('Error al crear la orden:', error);
+    setMessage('Error en la conexión al crear la orden.');
+    }
+  };
+
+
   const handleDeleteItem = async (itemId) => {
     try {
-      const response = await fetch(`http://localhost:8000/api/item-carrito/delete/${itemId}`, {
+      const response = await fetch(`http://localhost:8000/api/item-carrito/delete/${itemId}/`, {
         method: 'DELETE',
       });
       if (response.ok) {
@@ -103,6 +143,12 @@ const Carrito = ({ usuarioid }) => {
         </div>
       ))}
       <h3>Total: €{calcularTotal()}</h3>
+
+      <button onClick={handleBuy} style={{ marginTop: '20px' }}>
+        Comprar
+      </button>
+
+      {message && <p>{message}</p>}
     </div>
   );
 };

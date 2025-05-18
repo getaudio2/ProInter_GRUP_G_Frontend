@@ -6,7 +6,6 @@ const AdminCategorias = () => {
   const [modoEdicion, setModoEdicion] = useState(false);
   const [categoriaEditando, setCategoriaEditando] = useState(null);
 
-  // Cargar categorías al iniciar
   const fetchCategorias = async () => {
     try {
       const response = await fetch('http://localhost:8000/api/categorias/');
@@ -21,7 +20,6 @@ const AdminCategorias = () => {
     fetchCategorias();
   }, []);
 
-  // Crear nueva categoría
   const handleCrear = async (e) => {
     e.preventDefault();
     try {
@@ -40,7 +38,6 @@ const AdminCategorias = () => {
     }
   };
 
-  // Eliminar categoría
   const handleEliminar = async (id) => {
     if (!window.confirm('¿Estás seguro de eliminar esta categoría?')) return;
     try {
@@ -55,7 +52,6 @@ const AdminCategorias = () => {
     }
   };
 
-  // Actualizar categoría
   const handleActualizar = async (e) => {
     e.preventDefault();
     try {
@@ -85,7 +81,7 @@ const AdminCategorias = () => {
   return (
     <div>
       <h2>Gestión de Categorías</h2>
-      <form onSubmit={modoEdicion ? handleActualizar : handleCrear}>
+      <form onSubmit={modoEdicion ? handleActualizar : handleCrear} className="admin-form">
         <input
           type="text"
           placeholder="Nombre de categoría"
@@ -94,15 +90,21 @@ const AdminCategorias = () => {
           required
         />
         <button type="submit">{modoEdicion ? 'Actualizar' : 'Crear'}</button>
-        {modoEdicion && <button onClick={() => { setModoEdicion(false); setNombreCategoria(''); }}>Cancelar</button>}
+        {modoEdicion && (
+          <button type="button" onClick={() => { setModoEdicion(false); setNombreCategoria(''); }}>
+            Cancelar
+          </button>
+        )}
       </form>
 
-      <ul>
+      <ul className="admin-list">
         {categorias.map((cat) => (
           <li key={cat.id}>
-            {cat.nom}{' '}
-            <button onClick={() => iniciarEdicion(cat)}>Editar</button>{' '}
-            <button onClick={() => handleEliminar(cat.id)}>Eliminar</button>
+            {cat.nom}
+            <div>
+              <button onClick={() => iniciarEdicion(cat)}>Editar</button>
+              <button onClick={() => handleEliminar(cat.id)}>Eliminar</button>
+            </div>
           </li>
         ))}
       </ul>
