@@ -1,5 +1,32 @@
-.productos-container{
-    display: flex;
-    gap: 5px;
-    padding: 10px;
+.productos-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 20px;
+    width: 100%;
+}
+
+.category-title {
+    padding: 20px;
+    color: #333;
+    margin-top: 20px;
+    margin-bottom: -10px;
+}
+
+@media (max-width: 1200px) {
+    .productos-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .productos-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .productos-container {
+        grid-template-columns: 1fr;
+    }
 }

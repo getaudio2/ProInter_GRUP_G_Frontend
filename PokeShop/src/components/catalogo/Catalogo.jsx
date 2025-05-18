@@ -1,9 +1,10 @@
 import ProductoMini from "./ProductoMini";
 import "./Catalogo.css";
 
-export default function Catalogo({ productos }) {
+export default function Catalogo({ productos, selectedCategory }) {
     return (
         <div>
+            {selectedCategory && <h2 className="category-title">Categoría: {selectedCategory}</h2>}
             {
                 productos.length === 0 ? (
                     <p style={{ margin: "2rem", fontSize: "1.2rem", color: "#888" }}>

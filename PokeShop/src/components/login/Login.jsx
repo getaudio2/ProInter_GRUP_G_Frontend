@@ -16,17 +16,16 @@ function Login() {
                 },
                 body: JSON.stringify({ email, password }),
             });
-
+            const data = await response.json();
             if (response.ok) {
-                const data = await response.json();
-                console.log("Login successful:",data);
-                localStorage.setItem("user_id",data.id);
-
-                if (data.rol == "Usuario") {
+                console.log("Login successful:", data);
+                document.cookie = "id=" + data.id + ";";
+                if(data.rol == "usuario") {
                     navigate("/catalogo");
-                } else {
+                }else{
                     navigate("/admin");
                 }
+
             } else {
                 console.error("Login failed:", data);
                 alert(data.error || "Login failed");
