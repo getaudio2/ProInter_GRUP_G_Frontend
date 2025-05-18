@@ -13,6 +13,7 @@ import Inici  from './Inici';
 import Payment from './Payment';
 import Confirmation from './PaymentConfirm';
 import Carrito from "./Carrito.jsx";
+import Nosotros from "./SobreNosotros.jsx"
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
         <Route path="/perfil" element={<Profile />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/payment/confirmation" element={<Confirmation />} />
+        <Route path="/Nosotros" element={<Nosotros />} />
 
       </Routes>
     </BrowserRouter>
